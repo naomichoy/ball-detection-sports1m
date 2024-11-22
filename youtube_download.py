@@ -1,4 +1,5 @@
-# download the youtube video with sports that contains balls
+''' download the youtube video with sports that contains balls '''
+
 import os
 import json
 from yt_dlp import YoutubeDL
@@ -28,13 +29,10 @@ with open(LABELS_FILE, 'r', encoding='utf-8') as f:
 
 
 # check if target label is valid
-# create folder for each sport in TARGET_LABEL_NAME
 # map each text label to index
 target_label_map = {}
 for lb in TARGET_LABEL_NAME:
     if lb in labels:
-        OUTPUT_DIR = os.path.join(current_directory, "video_dataset", lb)    # Directory to save the videos
-        os.makedirs(OUTPUT_DIR, exist_ok=True)
         ind = labels.index(lb)
         target_label_map[ind] = lb
         print(f"Target label '{lb}' corresponds to index {ind}.")
@@ -54,13 +52,13 @@ filtered_videos_by_class = {}
 print(f"Reading dataset from {DATASET_FILE}...")
 with open(DATASET_FILE, 'r') as f:
     for line in f:
-        url, label = line.strip().split()
+        url, label_ind = line.strip().split()
         # check for multi label
-        split_label = label.split(',')
-        for label in split_label:
-            label = int(label)  # Convert label to integer
-            if label in target_label_map.keys():
-                sport_cls = target_label_map[label]
+        split_label = label_ind.split(',')
+        for label_ind in split_label:
+            label_ind = int(label_ind)  # Convert label to integer
+            if label_ind in target_label_map.keys():
+                sport_cls = target_label_map[label_ind]
                 if sport_cls not in filtered_videos_by_class: # first instance
                     filtered_videos_by_class[sport_cls] = [url]
                 else:
@@ -68,17 +66,33 @@ with open(DATASET_FILE, 'r') as f:
                 urls += 1
         if urls > numFiles:
             break
+
 print("filtered_videos_by_class:", json.dumps(filtered_videos_by_class, indent=4))
+print(f"filtered first {numFiles} relavant video files")
 
-
+## Downloading the videos into folders by class
 # Configure YoutubeDL
 ydl_opts = {
     'format': 'best',
-    'outtmpl': os.path.join(OUTPUT_DIR, '%(id)s.%(ext)s'),  # Save with video ID as filename
     'quiet': False,  # Set to True to suppress download logs
     'noplaylist': True,
 }
 
+for label, urls in filtered_videos_by_class.items():
+    # create folder for each sport in filtered_videos_by_class
+    OUTPUT_DIR = os.path.join(current_directory, "video_dataset", label)  # Directory to save the videos
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    print(f"Downloading {len(urls)} videos for class {label} into {OUTPUT_DIR}...")
+    ydl_opts['outtmpl'] = os.path.join(OUTPUT_DIR, '%(id)s.%(ext)s') # Save with video ID as filename
 
+    with YoutubeDL(ydl_opts) as ydl:
+        for url in urls:
+            try:
+                print(f"Downloading {url}...")
+                ydl.download([url])
+            except Exception as e:
+                print(f"Failed to download video {url}: {e}")
+
+print("All downloads completed!")
 
 
