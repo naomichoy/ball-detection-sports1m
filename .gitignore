@@ -165,3 +165,4 @@ video_dataset/
 frames_dataset/
 models/
 annotations/
+training/
