@@ -161,4 +161,4 @@ cython_debug/
 
 
 # project datasets
-.video_datasets/
+.video_dataset/
