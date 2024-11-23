@@ -36,7 +36,7 @@ def extract_frames(video_path, output_dir, num_frames):
                 print(f"Failed to read frame {frame_idx} from {video_path}")
                 continue
 
-            frame_name = f"{os.path.splitext(os.path.basename(video_path))[0]}_{count + 1}.jpg"
+            frame_name = f"{os.path.splitext(os.path.basename(video_path))[0]}_{frame_idx}.jpg"
             frame_path = os.path.join(output_dir, frame_name)
             cv2.imwrite(frame_path, frame)
 
