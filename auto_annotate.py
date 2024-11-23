@@ -1,4 +1,6 @@
 import os
+from glob import glob
+import torch
 from ultralytics.data.annotator import auto_annotate
 
 # files location
@@ -9,8 +11,25 @@ MODELS_DIR = os.path.join(current_directory, "models")
 os.makedirs(ANNOTATION_DIR, exist_ok=True)
 os.makedirs(MODELS_DIR, exist_ok=True)
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(f"Using device: {device}")
 
-auto_annotate(data=FRAMES_DIR,
-              output_dir=ANNOTATION_DIR,
-              det_model=os.path.join(MODELS_DIR, "yolo11n.pt"),
-              sam_model=os.path.join(MODELS_DIR, "mobile_sam.pt"))
+# Iterate through each class subfolder
+for class_name in os.listdir(FRAMES_DIR):
+    class_path = os.path.join(FRAMES_DIR, class_name)
+    if not os.path.isdir(class_path):
+        continue  # Skip non-directory files
+
+    # Create a corresponding output folder for the class
+    class_ANNOTATION_DIR = os.path.join(ANNOTATION_DIR, class_name)
+    os.makedirs(class_ANNOTATION_DIR, exist_ok=True)
+
+    auto_annotate(data=class_path,
+                  output_dir=class_ANNOTATION_DIR,
+                  det_model=os.path.join(MODELS_DIR, "yolo11m.pt"),
+                  sam_model=os.path.join(MODELS_DIR, "mobile_sam.pt"),
+                  device=device,
+                  classes=[32])
+
+print(f"Annotation complete. Results saved in {ANNOTATION_DIR}.")
+
