@@ -18,9 +18,8 @@ DATASET_FILE = os.path.join(parent_directory, "sports-1m-dataset", "original", "
 LABELS_FILE = os.path.join(parent_directory, "sports-1m-dataset", "labels.txt" )    # Path to labels.txt file
 print(f"Label file at {LABELS_FILE}")
 
-TARGET_LABEL_NAME = ["basketball", "freestyle football", "wallball", "flyball", "pickleball", "team handball",
-                     "goalball", "racquetball", "ball hockey", "floorball", "association football", "volleyball",
-                     "netball", "baseball", "softball", "gridiron football", "american football", "rugby"]      # Replace with the desired class name (sport)
+TARGET_LABEL_NAME = ["basketball", "freestyle football", "team handball", "softball", "gridiron football",
+                    "association football", "volleyball", "netball", "baseball", "american football", "rugby"]      # Replace with the desired class name (sport)
 OUTPUT_DIR = os.path.join(current_directory, "video_dataset")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -47,7 +46,7 @@ for lb in TARGET_LABEL_NAME:
 # Process the text file line by line
 
 # limit number of files to download for testing
-numFiles = 50
+numFiles = 100
 urls = 0
 
 filtered_videos_by_class = {}
