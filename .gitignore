@@ -163,3 +163,4 @@ cython_debug/
 # project datasets
 video_dataset/
 frames_dataset/
+models/
