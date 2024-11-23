@@ -2,6 +2,8 @@
 
 import os
 import json
+import time
+import asyncio
 from yt_dlp import YoutubeDL
 
 # files location
@@ -70,29 +72,46 @@ with open(DATASET_FILE, 'r') as f:
 print("filtered_videos_by_class:", json.dumps(filtered_videos_by_class, indent=4))
 print(f"filtered first {numFiles} relavant video files")
 
+
 ## Downloading the videos into folders by class
-# Configure YoutubeDL
-ydl_opts = {
-    'format': 'best',
-    'quiet': False,  # Set to True to suppress download logs
-    'noplaylist': True,
-}
 
-for label, urls in filtered_videos_by_class.items():
-    # create folder for each sport in filtered_videos_by_class
-    OUTPUT_DIR = os.path.join(current_directory, "video_dataset", label)  # Directory to save the videos
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    print(f"Downloading {len(urls)} videos for class {label} into {OUTPUT_DIR}...")
-    ydl_opts['outtmpl'] = os.path.join(OUTPUT_DIR, '%(id)s.%(ext)s') # Save with video ID as filename
+# Asynchronous function to download videos
+async def download_video(url, output_dir):
+    # Configure YoutubeDL
+    ydl_opts = {
+        'format': 'best',
+        'outtmpl': os.path.join(output_dir, '%(id)s.%(ext)s'),
+        'quiet': True,  # Suppress logs
+        'noplaylist': True,
+    }
+    try:
+        with YoutubeDL(ydl_opts) as ydl:
+            await asyncio.to_thread(ydl.download, [url])
+            print(f"Downloaded: {url}")
+    except Exception as e:
+        print(f"Failed to download {url}: {e}")
 
-    with YoutubeDL(ydl_opts) as ydl:
-        for url in urls:
-            try:
-                print(f"Downloading {url}...")
-                ydl.download([url])
-            except Exception as e:
-                print(f"Failed to download video {url}: {e}")
 
-print("All downloads completed!")
+# Asynchronous function to process each class
+async def process_class(label, urls):
+    class_folder = os.path.join(OUTPUT_DIR, f"{label}")
+    os.makedirs(class_folder, exist_ok=True)  # Create directory for the class
 
+    print(f"Downloading {len(urls)} videos for class {label} into {class_folder}...")
+    tasks = [download_video(url, class_folder) for url in urls]
+    await asyncio.gather(*tasks)  # Run all downloads for this class concurrently
+
+
+# Main function to process all classes
+async def main():
+    tasks = [process_class(label, urls) for label, urls in filtered_videos_by_class.items()]
+    await asyncio.gather(*tasks)  # Run all classes concurrently
+    print("All downloads completed!")
+
+
+# Run the script
+if __name__ == "__main__":
+    start_time = time.time()
+    asyncio.run(main())
+    print(f'Script completed in {time.time() - start_time} seconds')
 
