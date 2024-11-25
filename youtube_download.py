@@ -23,6 +23,7 @@ TARGET_LABEL_NAME = ["basketball", "freestyle football", "team handball", "softb
 OUTPUT_DIR = os.path.join(current_directory, "video_dataset")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+
 ## map text label to number in json file
 # load label file
 with open(LABELS_FILE, 'r', encoding='utf-8') as f:
@@ -46,8 +47,10 @@ for lb in TARGET_LABEL_NAME:
 # Process the text file line by line
 
 # limit number of files to download for testing
-numFiles = 100
+numFiles = 300
 urls = 0
+
+# TODO: only download if not exist
 
 filtered_videos_by_class = {}
 print(f"Reading dataset from {DATASET_FILE}...")
