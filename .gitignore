@@ -162,6 +162,7 @@ cython_debug/
 
 # project datasets
 video_dataset/
+test_video_dataset/
 frames_dataset/
 models/
 annotations/
