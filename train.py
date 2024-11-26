@@ -29,7 +29,7 @@ def train():
 
 
     # Train the model
-    model.train(data="dataset_custom.yaml", #path to yaml file
+    model.train(data="dataset_binary.yaml", #path to yaml file
                imgsz=640,
                batch=2,
                epochs=30,
