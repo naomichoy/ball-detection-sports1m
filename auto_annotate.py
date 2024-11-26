@@ -1,5 +1,5 @@
 import os
-from glob import glob
+import time
 import torch
 from ultralytics.data.annotator import auto_annotate
 
@@ -13,6 +13,8 @@ os.makedirs(MODELS_DIR, exist_ok=True)
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(f"Using device: {device}")
+
+start_time = time.time()
 
 # Iterate through each class subfolder
 for class_name in os.listdir(FRAMES_DIR):
@@ -32,4 +34,5 @@ for class_name in os.listdir(FRAMES_DIR):
                   classes=[32])
 
 print(f"Annotation complete. Results saved in {ANNOTATION_DIR}.")
+print(f'Process finished in {time.time()-start_time}')
 
