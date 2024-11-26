@@ -13,7 +13,7 @@ FRAMES_DIR = os.path.join(current_directory, "frames_dataset")  # Directory to s
 os.makedirs(FRAMES_DIR, exist_ok=True)
 
 # Number of frames to extract per video
-NUM_FRAMES = 500
+NUM_FRAMES = 250
 
 # Extract frames from a video
 def extract_frames(video_path, output_dir, num_frames):
