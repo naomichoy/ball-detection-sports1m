@@ -7,19 +7,22 @@ import glob
 current_directory = os.getcwd()
 frames_directory = os.path.join(current_directory, 'frames_dataset')  # Images
 annotations_directory = os.path.join(current_directory, 'annotations')  # Annotations
-output_directory = os.path.join(current_directory, 'training')  # Final output folder for train and val splits
+output_directory = os.path.join(current_directory, 'training')  # Final output folder for train, val, and test splits
 
-# Split ratio
-train_ratio = 0.9
-val_ratio = 0.1
+# Split ratios
+train_ratio = 0.7
+val_ratio = 0.2
+test_ratio = 0.1
 
 # Ensure output directory exists
 train_dir = os.path.join(output_directory, 'train')
 val_dir = os.path.join(output_directory, 'val')
+test_dir = os.path.join(output_directory, 'test')
 os.makedirs(train_dir, exist_ok=True)
 os.makedirs(val_dir, exist_ok=True)
+os.makedirs(test_dir, exist_ok=True)
 
-# Create class directories for train and val
+# Create class directories for train, val, and test
 for class_name in os.listdir(frames_directory):
     class_path_frames = os.path.join(frames_directory, class_name)
     class_path_annotations = os.path.join(annotations_directory, class_name)
@@ -27,33 +30,53 @@ for class_name in os.listdir(frames_directory):
     if os.path.isdir(class_path_frames):  # Only process if it's a directory
         os.makedirs(os.path.join(train_dir, class_name), exist_ok=True)
         os.makedirs(os.path.join(val_dir, class_name), exist_ok=True)
+        os.makedirs(os.path.join(test_dir, class_name), exist_ok=True)
 
-        # Use glob to get the list of image files in the class directory
-        image_files = glob.glob(os.path.join(class_path_frames, '*.jpg')) + glob.glob(
-            os.path.join(class_path_frames, '*.png'))
+        # Use glob to match images and their corresponding annotations
+        image_files = glob.glob(os.path.join(class_path_frames, '*.jpg'))  # Match .jpg files only
+        annotation_files = glob.glob(os.path.join(class_path_annotations, '*.txt'))  # Match .txt files
 
-        # Shuffle the image list
-        random.shuffle(image_files)
+        # Filter images to include only those with corresponding annotations
+        matched_files = [
+            image_file for image_file in image_files
+            if os.path.join(class_path_annotations, os.path.basename(image_file).replace('.jpg', '.txt')) in annotation_files
+        ]
+        print(f"total files of {class_name} with annotations: {len(matched_files)}")
 
-        # Split the files into train and val sets
-        split_index = int(len(image_files) * train_ratio)
-        train_files = image_files[:split_index]
-        val_files = image_files[split_index:]
+        # Shuffle the filtered image list
+        random.shuffle(matched_files)
 
-        # Move files for training
+        # Split the files into train, val, and test sets
+        total_files = len(matched_files)
+        train_split = int(total_files * train_ratio)
+        val_split = int(total_files * (train_ratio + val_ratio))
+
+        train_files = matched_files[:train_split]
+        val_files = matched_files[train_split:val_split]
+        test_files = matched_files[val_split:]
+
+        # Copy files for training
         for train_file in train_files:
-            # Move image file
+            # Copy image file
             shutil.copy(train_file, os.path.join(train_dir, class_name, os.path.basename(train_file)))
-            # Move annotation file
-            annotation_file = train_file.replace('.jpg', '.txt').replace('.png', '.txt')
+            # Copy annotation file
+            annotation_file = os.path.join(class_path_annotations, os.path.basename(train_file).replace('.jpg', '.txt'))
             shutil.copy(annotation_file, os.path.join(train_dir, class_name, os.path.basename(annotation_file)))
 
-        # Move files for validation
+        # Copy files for validation
         for val_file in val_files:
-            # Move image file
+            # Copy image file
             shutil.copy(val_file, os.path.join(val_dir, class_name, os.path.basename(val_file)))
-            # Move annotation file
-            annotation_file = val_file.replace('.jpg', '.txt').replace('.png', '.txt')
+            # Copy annotation file
+            annotation_file = os.path.join(class_path_annotations, os.path.basename(val_file).replace('.jpg', '.txt'))
             shutil.copy(annotation_file, os.path.join(val_dir, class_name, os.path.basename(annotation_file)))
 
-print("Dataset has been split into 'train' and 'val' directories.")
+        # Copy files for testing
+        for test_file in test_files:
+            # Copy image file
+            shutil.copy(test_file, os.path.join(test_dir, class_name, os.path.basename(test_file)))
+            # Copy annotation file
+            annotation_file = os.path.join(class_path_annotations, os.path.basename(test_file).replace('.jpg', '.txt'))
+            shutil.copy(annotation_file, os.path.join(test_dir, class_name, os.path.basename(annotation_file)))
+
+print("Dataset has been split into 'train', 'val', and 'test' directories.")
