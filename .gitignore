@@ -166,4 +166,6 @@ test_video_dataset/
 frames_dataset/
 models/
 annotations/
-training/
+datasets*/
+runs/
+*.pt
