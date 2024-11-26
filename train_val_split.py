@@ -41,7 +41,11 @@ for class_name in os.listdir(frames_directory):
             image_file for image_file in image_files
             if os.path.join(class_path_annotations, os.path.basename(image_file).replace('.jpg', '.txt')) in annotation_files
         ]
-        print(f"total files of {class_name} with annotations: {len(matched_files)}")
+        info = f"total files of {class_name} with annotations: {len(matched_files)}"
+        print(info)
+        info_file = os.path.join(output_directory, "info.txt")
+        with open(info_file, "w+") as f:
+            f.write(info)
 
         # Shuffle the filtered image list
         random.shuffle(matched_files)
