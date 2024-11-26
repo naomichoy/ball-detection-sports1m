@@ -29,7 +29,7 @@ for class_name in os.listdir(FRAMES_DIR):
     auto_annotate(data=class_path,
                   output_dir=class_ANNOTATION_DIR,
                   det_model=os.path.join(MODELS_DIR, "yolo11m.pt"),
-                  sam_model=os.path.join(MODELS_DIR, "mobile_sam.pt"),
+                  # sam_model=os.path.join(MODELS_DIR, "mobile_sam.pt"),
                   device=device,
                   classes=[32])
 
