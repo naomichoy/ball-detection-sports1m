@@ -44,8 +44,8 @@ for class_name in os.listdir(frames_directory):
         info = f"total files of {class_name} with annotations: {len(matched_files)}"
         print(info)
         info_file = os.path.join(output_directory, "info.txt")
-        with open(info_file, "w+") as f:
-            f.write(info)
+        f = open(info_file, "w+")
+        f.write(info)
 
         # Shuffle the filtered image list
         random.shuffle(matched_files)
@@ -83,4 +83,7 @@ for class_name in os.listdir(frames_directory):
             annotation_file = os.path.join(class_path_annotations, os.path.basename(test_file).replace('.jpg', '.txt'))
             shutil.copy(annotation_file, os.path.join(test_dir, class_name, os.path.basename(annotation_file)))
 
-print("Dataset has been split into 'train', 'val', and 'test' directories.")
+info = f"Dataset split complete: {len(train_files)} train, {len(val_files)} val, {len(test_files)} test."
+print(info)
+f.write(info)
+f.close()
