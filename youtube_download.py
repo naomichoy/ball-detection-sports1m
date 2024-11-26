@@ -77,6 +77,8 @@ print(f"filtered first {numFiles} relavant video files")
 
 ## Downloading the videos into folders by class
 
+# TODO: bypass timeout
+
 # Asynchronous function to download videos
 async def download_video(url, output_dir):
     # Configure YoutubeDL
