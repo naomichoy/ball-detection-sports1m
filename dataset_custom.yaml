@@ -1,0 +1,21 @@
+# Dataset configuration file for YOLO
+train: ./train  # Path to the train directory
+val: ./val      # Path to the val directory
+test: ./test    # Optional, path to the test directory (if used for evaluation)
+
+# Number of classes
+nc: 11  # Replace with the total number of classes
+
+# Class names
+names:
+  - basketball
+  - freestyle football
+  - team handball
+  - association football
+  - volleyball
+  - netball
+  - baseball
+  - softball
+  - gridiron football
+  - american football
+  - rugby
