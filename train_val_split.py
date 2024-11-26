@@ -7,7 +7,7 @@ import glob
 current_directory = os.getcwd()
 frames_directory = os.path.join(current_directory, 'frames_dataset')  # Images
 annotations_directory = os.path.join(current_directory, 'annotations')  # Annotations
-output_directory = os.path.join(current_directory, 'training')  # Final output folder for train, val, and test splits
+output_directory = os.path.join(current_directory, 'datasets')  # Final output folder for train, val, and test splits
 
 # Split ratios
 train_ratio = 0.7
