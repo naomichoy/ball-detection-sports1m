@@ -1,0 +1,11 @@
+# Define paths to the dataset
+train: ./datasets/train  # Path to training images and annotations
+val: ./datasets/val      # Path to validation images and annotations
+test: ./datasets/test    # Path to testing images and annotations (optional for YOLO training)
+
+# Define the number of classes
+nc: 1  # Binary detector, so only 1 class
+
+# Define class names
+names:
+  0: ball  # Replace 'object' with the actual name of the object being detected, e.g., 'ball'
