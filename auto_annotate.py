@@ -38,7 +38,13 @@ for class_name in os.listdir(FRAMES_DIR):
 
     for image_file in image_files:
         # Perform object detection on the image
-        results = model.predict(image_file, device=device)
+        results = model.predict(image_file,
+                                save=True,
+                                save_txt=True,
+                                save_conf=True,
+                                classes=[32],  # Sports ball class
+                                device=device
+                                )
 
         # Extract bounding box information from the results
         bboxes = results[0].boxes.data  # Tensor containing bounding box data
@@ -59,10 +65,6 @@ for class_name in os.listdir(FRAMES_DIR):
                 bbox[2].item(),  # x_max
                 bbox[3].item(),  # y_max
             )
-
-            # Skip if the detection is not class 32
-            if cls != 32:
-                continue
 
             # Convert to normalized YOLO format: (class, x_center, y_center, width, height)
             x_center = (x_min + x_max) / 2 / img_width
