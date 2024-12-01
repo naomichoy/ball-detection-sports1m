@@ -1,6 +1,6 @@
 import os
-import json
 import numpy as np
+import torch
 from ultralytics import YOLO
 
 # Helper function to convert numpy arrays to lists
@@ -19,8 +19,11 @@ def eval():
 
     data_yaml = os.path.join(current_directory, "dataset_eval_binary.yaml")
 
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    print(f"Using device: {device}")
+
     model = YOLO(MODEL_PATH)
-    results = model.val(data=data_yaml, show=True, save=True, line_width=1, split="test")
+    results = model.val(data=data_yaml, show=True, save=True, line_width=1, split="test", device=device)
     print(results)
     #
     # metrics = {

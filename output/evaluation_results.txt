@@ -2,7 +2,7 @@ ultralytics.utils.metrics.DetMetrics object with attributes:
 
 ap_class_index: array([0])
 box: ultralytics.utils.metrics.Metric object
-confusion_matrix: <ultralytics.utils.metrics.ConfusionMatrix object at 0x000001CC5FA42EF0>
+confusion_matrix: <ultralytics.utils.metrics.ConfusionMatrix object at 0x000001592EDE34F0>
 curves: ['Precision-Recall(B)', 'F1-Confidence(B)', 'Precision-Confidence(B)', 'Recall-Confidence(B)']
 curves_results: [[array([          0,    0.001001,    0.002002,    0.003003,    0.004004,    0.005005,    0.006006,    0.007007,    0.008008,    0.009009,     0.01001,    0.011011,    0.012012,    0.013013,    0.014014,    0.015015,    0.016016,    0.017017,    0.018018,    0.019019,     0.02002,    0.021021,    0.022022,    0.023023,
           0.024024,    0.025025,    0.026026,    0.027027,    0.028028,    0.029029,     0.03003,    0.031031,    0.032032,    0.033033,    0.034034,    0.035035,    0.036036,    0.037037,    0.038038,    0.039039,     0.04004,    0.041041,    0.042042,    0.043043,    0.044044,    0.045045,    0.046046,    0.047047,
@@ -347,6 +347,6 @@ maps: array([    0.86662])
 names: {0: 'ball'}
 plot: True
 results_dict: {'metrics/precision(B)': 0.9237821257747467, 'metrics/recall(B)': 0.9148351648351648, 'metrics/mAP50(B)': 0.9603481284676822, 'metrics/mAP50-95(B)': 0.8666181191943565, 'fitness': 0.875991120121689}
-save_dir: WindowsPath('runs/detect/val9')
-speed: {'preprocess': 0.582224509619564, 'inference': 13.939456443566119, 'loss': 0.0012822233872606574, 'postprocess': 1.9357708837255576}
+save_dir: WindowsPath('runs/detect/val13')
+speed: {'preprocess': 0.21932524752754698, 'inference': 11.428113893277382, 'loss': 0.0010242351906837065, 'postprocess': 0.9269314694266788}
 task: 'detect'
