@@ -56,7 +56,7 @@ while cap.isOpened():
         break  # End of video
 
     # Run YOLO prediction on the frame
-    results = model.predict(frame, imgsz=640, conf=0.5, verbose=False, device=device)
+    results = model.predict(frame, imgsz=640, conf=0.4, verbose=False, device=device)
 
     # Draw predictions on the frame
     annotated_frame = results[0].plot()
