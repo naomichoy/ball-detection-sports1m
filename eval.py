@@ -17,7 +17,7 @@ def eval():
     OUTPUT_PATH = os.path.join(current_directory, "output")
     os.makedirs(OUTPUT_PATH, exist_ok=True)
 
-    data_yaml = os.path.join(current_directory, "dataset_eval_binary.yaml")
+    data_yaml = os.path.join(current_directory, "dataset_binary.yaml")
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Using device: {device}")
