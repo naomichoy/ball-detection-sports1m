@@ -5,8 +5,8 @@ import glob
 
 # files location
 current_directory = os.getcwd()
-VIDEO_DIR = os.path.join(current_directory, "video_dataset")  # Directory with downloaded videos
-FRAMES_DIR = os.path.join(current_directory, "frames_dataset")  # Directory to save extracted frames
+VIDEO_DIR = os.path.join(current_directory, "../video_dataset")  # Directory with downloaded videos
+FRAMES_DIR = os.path.join(current_directory, "../frames_dataset")  # Directory to save extracted frames
 os.makedirs(FRAMES_DIR, exist_ok=True)
 
 # Number of frames to extract per video

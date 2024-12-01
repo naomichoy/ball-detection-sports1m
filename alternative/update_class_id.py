@@ -3,7 +3,7 @@ import glob
 
 # Paths to dataset
 current_directory = os.getcwd()
-dataset_dir = os.path.join(current_directory, 'datasets')
+dataset_dir = os.path.join(current_directory, '../datasets')
 folders = ['train', 'val', 'test']
 
 # Define class mapping
