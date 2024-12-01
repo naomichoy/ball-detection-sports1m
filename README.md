@@ -32,19 +32,20 @@ now set to 250 frames of each video, can be adjusted
 - Annotations are saved in normalised COCO format ```<class> <x_mid> <y_mid> <width> <height>```
 - Alternative: Manually annotate a small dataset with tools like LabelImg or Roboflow
 #### How to improve annotations?
-Train a model with the initial annotations. Run ```auto_annotate.py``` again with the fine-tuned model.
+Train a model with the initial annotations. Run ```auto_annotate.py``` again with the fine-tuned model. <br>
+Make a copy of the initial annoatations as a checkpoint for the next steps
 
-### 4. Updating class ID on annotation file
+
+### 4. Organise files into training folders
+```train_val_split_binary.py```
+
+Copy files into folders to be read with the training function in Ultralytics package.
+
+### 5. Updating class ID on annotation file
 ```update_class_id_binary.py``` 
 
 Changing class ID of the annotations from 32 of the COCO dataset to 0 for a single class detection. <br>
 (Alternative: to detect different balls, use ```update_class_id.py```, which redistributes class ID according to list of sports chosen)
-
-
-### 5. Organise files into training folders
-```train_val_split_binary.py```
-
-Copy files into folders to be read with the training function in Ultralytics package. 
 
 
 
