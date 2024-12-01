@@ -8,6 +8,7 @@
 Dataset: Sports-1M
 
 ## Setup Requirements
+```pip install -r requirements.txt```
 
 ## Data processing pipeline steps
 ### 1. Download Youtube videos from links listed in the Sports-1M dataset repository
@@ -31,8 +32,8 @@ now set to 250 frames of each video, can be adjusted
 - Auto annotating balls in the extracted frames with a pre-trained YOLOv11m model on sports ball class (class 32).
 - Ultralytics package is used.
 - Annotations are only saved where more than 1 ball is detected
-- Annotations are saved in normalised COCO format ```<class> <x_mid> <y_mid> <width> <height>```
-- Alternative: Manually annotate a small dataset with tools like LabelImg or Roboflow
+- Annotations are saved in normalised COCO bounding box format ```<class> <x_mid> <y_mid> <width> <height>```
+- Alternative: Manually annotate or adjust a small dataset with tools like LabelImg or Roboflow
 #### How to improve annotations?
 Train a model with the initial annotations. Run ```auto_annotate.py``` again with the fine-tuned model. <br>
 Make a copy of the initial annoatations as a checkpoint for the next steps
@@ -46,8 +47,8 @@ Copy files into folders to be read with the training function in Ultralytics pac
 ### 5. Updating class ID on annotation file
 ```update_class_id_binary.py``` 
 
-Changing class ID of the annotations from 32 of the COCO dataset to 0 for a single class detection. <br>
-(Alternative: to detect different balls, use ```update_class_id.py```, which redistributes class ID according to list of sports chosen)
+Changing class ID of the annotations from 32 of the COCO dataset to 0 for a single class detection (Coarse class-count). <br>
+(Alternative: to detect different balls (fine class-count), use ```update_class_id.py```, which redistributes class ID according to list of sports chosen)
 
 
 
@@ -72,6 +73,7 @@ Saves an annotated video randomly picked from the downloaded video dataset
 
 ## Improving dataset
 - Run steps from 3. Annotate the ball again with the fine-tuned model
+- Manually adjust some annotations
 - Explore data augmentation, Slicing Aided Hyper Inference (SAHI)
 
 ## Summary of steps and Scripts
@@ -95,5 +97,5 @@ Saves an annotated video randomly picked from the downloaded video dataset
 - Videos from the dataset is no longer available on YouTube, less dataset than expected to download
 - Video quality is very low, some videos are from more than 10 years ago with low resolution.
   - main frames return with no detection on auto annotation with the pre-trained model
-- Attempted to detect ball by different sports, but the dataset is very biased due to the reasons above
+- Attempted to detect ball by different sports (fine class-count), but the dataset is very biased due to the reasons above
 - Other lookalike items such as round logos are also detected as ball
