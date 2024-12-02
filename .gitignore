@@ -170,4 +170,4 @@ datasets*/
 runs/
 *.pt
 *.mp4
-augmented_frames/
+augmented_*/
