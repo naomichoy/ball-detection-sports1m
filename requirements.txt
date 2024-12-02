@@ -5,5 +5,8 @@ Pillow==9.3.0
 Pillow==11.0.0
 torch==2.0.0+cu117
 torch==2.5.1+cu121
+torchvision==0.15.1+cu117
+torchvision==0.20.1+cu121
+tqdm==4.67.0
 ultralytics==8.3.36
 yt_dlp==2024.11.18
