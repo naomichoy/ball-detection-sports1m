@@ -50,7 +50,8 @@ Make a copy of the initial annoatations as a checkpoint for the next steps
 ### 5. Organise files into training folders
 ```train_val_split_binary.py```
 
-Copy files into folders to be read with the training function in Ultralytics package.
+Copy files into folders to be read with the training function in Ultralytics package. <br>
+Only frames with annotations are copied.
 
 
 ### 6. Updating class ID on annotation file
