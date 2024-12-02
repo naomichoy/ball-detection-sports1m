@@ -18,7 +18,7 @@ Clone the Sports-1M repository, place it under the same parent directory as this
 - Take video links from original/train_partition.txt
 - mapping the sports class number label with labels.txt
 - Only use sports that involves a ball, listed in ```TARGET_LABEL_NAME```
-- Using yt-dlp module
+- Using [yt-dlp](https://github.com/yt-dlp/yt-dlp) module
 - Videos are saved by class
 - Set to download a total of 300 videos (adjustable)
 
@@ -38,7 +38,7 @@ Save as a separate folder ```augmented_dataset``` .
 ### 4. Annotate the ball
 ```auto_annotate.py```
 - Auto annotating balls in the extracted frames with a pre-trained YOLOv11m model on sports ball class (class 32).
-- Ultralytics package is used.
+- [Ultralytics](https://github.com/ultralytics/ultralytics) package is used.
 - Annotations are only saved where more than 1 ball is detected
 - Annotations are saved in normalised COCO bounding box format ```<class> <x_mid> <y_mid> <width> <height>```
 - Alternative: Manually annotate or adjust a small dataset with tools like LabelImg or Roboflow
