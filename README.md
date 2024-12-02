@@ -8,7 +8,8 @@
 Dataset: [Sports-1M](https://github.com/naomichoy/ball-detection-sports1m/tree/main) -- [Repo](https://github.com/gtoderici/sports-1m-dataset/tree/master)
 
 ## Setup Requirements
-```pip install -r requirements.txt``` <br>
+```pip install -r requirements.txt``` 
+
 Clone the Sports-1M repository, place it under the same parent directory as this repository
 
 ## Data processing pipeline steps
