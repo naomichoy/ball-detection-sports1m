@@ -84,7 +84,7 @@ Saves an annotated video randomly picked from the downloaded video dataset
 
 
 ## Improving dataset
-- Run steps from 3. Annotate the ball again with the fine-tuned model
+- Run steps from 3. Annotate the ball again with the fine-tuned model and/or adjust confidence level
 - Manually adjust some annotations
 - Explore different data augmentation in ```data_augmentation.py``` 
 - Explore Slicing Aided Hyper Inference (SAHI), Cross Validation

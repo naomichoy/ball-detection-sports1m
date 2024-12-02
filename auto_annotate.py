@@ -8,7 +8,7 @@ from ultralytics import YOLO
 # Files location
 current_directory = os.getcwd()
 FRAMES_DIR = os.path.join(current_directory, "frames_dataset")  # Directory containing extracted frames
-ANNOTATION_DIR = os.path.join(current_directory, "annotations")  # Directory to save annotations
+ANNOTATION_DIR = os.path.join(current_directory, "augmented_annotations")  # Directory to save annotations
 MODELS_DIR = os.path.join(current_directory, "models")  # Directory containing detection models
 os.makedirs(ANNOTATION_DIR, exist_ok=True)
 os.makedirs(MODELS_DIR, exist_ok=True)
@@ -43,6 +43,7 @@ for class_name in os.listdir(FRAMES_DIR):
                                 save_txt=True,
                                 save_conf=True,
                                 classes=[32],  # Sports ball class
+                                conf=0.4, # discard low confidence annotations
                                 device=device
                                 )
 
